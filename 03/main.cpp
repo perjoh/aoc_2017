@@ -135,11 +135,21 @@ int find_distance(int value)
 	traverser.traverse([&value](const Point& pt, int count)
 	{ 
 		if (count == value) {
-			value = pt.dist
+			value = pt.distance_from();
 			return false;
 		}
 
 		return true;
+	});
+
+	return value;
+}
+
+int find_value_greater(int value) 
+{
+	Spiral_traverser traverser;
+	traverser.traverse([value](const Point& pt, int count) 
+	{
 	});
 }
 
