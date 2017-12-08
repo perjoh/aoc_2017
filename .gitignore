@@ -1,0 +1,16 @@
+Debug
+Win32
+fxview.dir
+CMakeFiles
+CMakeCache.txt
+*.vcxproj
+*.vcxproj.*
+.vs
+*.VC.*
+*.sln
+cmake_install.cmake
+*.pyc
+tests/CTestTestfile.cmake
+CTestTestfile.cmake
+tests/Makefile
+Makefile
