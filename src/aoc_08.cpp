@@ -82,7 +82,7 @@ int main()
 {
 
 
-	std::ifstream file("input/08/input.txt");
+	std::ifstream file("input/aoc_08.txt");
 	if (file) {
 
 		int max_val = 0;

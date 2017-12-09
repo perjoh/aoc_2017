@@ -38,7 +38,7 @@ int main()
 	assert(count_jumps({0, 3, 0, 1, -3}) == 5);
 	assert(count_jumps({0, 3, 0, 1, -3}, &inc_part2) == 10);
 
-	ifstream file("input/05/input.txt");
+	ifstream file("input/aoc_05.txt");
 	if (file) { 
 		istream_iterator<int> file_begin(file), file_end;
 		vector<int> maze(file_begin, file_end);

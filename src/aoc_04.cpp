@@ -66,7 +66,7 @@ int main()
 	assert(check_passphrase_anagram("iiii oiii ooii oooi oooo"));
 	assert(!check_passphrase_anagram("oiii ioii iioi iiio"));
 
-	const char* filename = "input/04/input.txt";
+	const char* filename = "input/aoc_04.txt";
 	ifstream file(filename);
 	if (file) { 
 		cout << "Part 1: " << count_valid_passphrases(file, &check_passphrase) << "\n"; 

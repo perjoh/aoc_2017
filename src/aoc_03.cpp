@@ -186,7 +186,7 @@
 		assert(find_value_greater(400) == 747);
 		assert(find_value_greater(800) == 806);
 
-		std::ifstream f("input/03/input.txt");
+		std::ifstream f("input/aoc_03.txt");
 		if (f) {
 			int value = 0;
 			f >> value;
