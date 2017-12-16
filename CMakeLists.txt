@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(aoc)
 
-set(PROJECTS aoc_03 aoc_04 aoc_05 aoc_08 aoc_09 aoc_11 aoc_12)
+set(PROJECTS aoc_03 aoc_04 aoc_05 aoc_08 aoc_09 aoc_11 aoc_12 aoc_15 aoc_16)
 
 foreach(target IN LISTS PROJECTS) 
 	add_executable(${target} src/${target}.cpp)
