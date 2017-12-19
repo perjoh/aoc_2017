@@ -82,10 +82,9 @@ pair<string, int> traverse_maze(const vector<string>& maze)
 	while (inside(maze, pos)) {
 		const char tile = get_tile(maze, pos);
 		if (tile == '+') {
-			char right_tile = get_tile(maze, pos + rotate_cw(dir));
-			char left_tile = get_tile(maze, pos + rotate_ccw(dir));
+			const char left_tile = get_tile(maze, pos + rotate_ccw(dir));
 
-			if (left_tile == ' ' || right_tile == inverse_tile(expected_tile) || ('A' <= right_tile && right_tile <= 'Z')) {
+			if (left_tile == ' ') {
 				dir = rotate_cw(dir); // go right
 			} else {
 				dir = rotate_ccw(dir); // go left
