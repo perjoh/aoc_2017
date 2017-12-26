@@ -9,14 +9,6 @@
 
 using namespace std;
 
-long long to_value(const string& s)
-{
-	long long value;
-	stringstream ss(s);
-	ss >> value;
-	return value;
-}
-
 using Registers = map<string, long long>;
 
 struct Instruction 
@@ -40,8 +32,7 @@ public :
 	Cpu()
 	{
 		using placeholders::_1;
-		using placeholders::_2;
-
+		using placeholders::_2; 
 
 		instruction_set["snd"] = bind(&Cpu::snd, this, _1, _2);
 		instruction_set["set"] = bind(&Cpu::set, this, _1, _2);
@@ -67,8 +58,8 @@ public :
 			const auto& p = program[pc];
 			jmp = 1;
 			instruction_set[p.op](p.arg0, p.arg1);
-			pc += jmp;
 			if (jmp != 0) {
+				pc += jmp;
 				++num_exec;
 			}
 		}
@@ -182,7 +173,7 @@ private :
 			return registers[arg];
 		} 
 
-		return to_value(arg);
+		return stoi(arg);
 	} 
 }; 
 

@@ -39,14 +39,6 @@ std::string find_root(const Program_map& programs)
 	return std::string();
 }
 
-int to_int(const string& s)
-{
-	int value = 0;
-	stringstream ss(s);
-	ss >> value;
-	return value; 
-}
-
 pair<string, Program> parse_input(const string& input)
 {
 	vector<string> names;
@@ -62,7 +54,7 @@ pair<string, Program> parse_input(const string& input)
 	regex_search(input, m, regex_weight); 
 
 	Program program;
-	program.weight = to_int(m[1]);
+	program.weight = stoi(m[1]);
 	program.children.insert(program.children.begin(), names.cbegin() + 1, names.cend()); 
 
 	return make_pair(names[0], program);
@@ -70,8 +62,9 @@ pair<string, Program> parse_input(const string& input)
 
 int sum_weight(const Program_map& programs, const string& prg_name)
 {
-	int sum = 0;
 	auto& program = programs.find(prg_name)->second;
+
+	int sum = program.weight;
 
 	for (auto& child : program.children) {
 		sum += sum_weight(programs, child);
@@ -84,7 +77,7 @@ bool is_balanced(const Program_map& programs, const string& prg_name)
 {
 	auto& program = programs.find(prg_name)->second;
 	if (!program.children.empty()) {
-		int weight = sum_weight(programs, program.children[0]);
+		const int weight = sum_weight(programs, program.children[0]);
 		for (auto it = program.children.cbegin() + 1; it != program.children.cend(); ++it) {
 			if (weight != sum_weight(programs, *it)) {
 				return false;
@@ -106,6 +99,40 @@ string find_unbalanced(const Program_map& programs, const string& root_prg)
 	} 
 
 	return root_prg;
+}
+
+int get_weight(const Program_map& programs, const string& prg_name)
+{
+    return programs.find(prg_name)->second.weight;
+}
+ 
+int find_balance_weight(const Program_map& programs, const string& prg)
+{
+    auto& program = programs.find(prg)->second;
+
+	if (!program.children.empty()) {
+
+		vector<int> weights;
+		for (auto& child_prg : program.children) {
+			weights.push_back(sum_weight(programs, child_prg));
+		}
+
+		sort(weights.begin(), weights.end());
+		auto it = adjacent_find(weights.cbegin(), weights.cend());
+		if (it != weights.cend()) {
+			int common_weight = *it;
+
+			for (auto& child_prg : program.children) {
+				const int weight = sum_weight(programs, child_prg);
+				if (weight != common_weight) {
+					int diff = weight - common_weight;
+					return get_weight(programs, child_prg) - diff;
+				}
+			}
+		}
+	}
+
+    return 0; 
 }
 
 void test()
@@ -140,7 +167,7 @@ int main()
 		const string& root = find_root(programs);
 		cout << "Part 1: " << root << "\n";
 
-		cout << "Part 2: " << find_unbalanced(programs, root) << "\n";
+        cout << "Part 2: " << find_balance_weight(programs, find_unbalanced(programs, root)) << "\n";
 	}
 
 	return 0;
