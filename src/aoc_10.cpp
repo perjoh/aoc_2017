@@ -82,7 +82,7 @@ auto append_suffix(const string& s)
 template <typename Iterator>
 unsigned char reduce_row(Iterator beg, Iterator end)
 {
-    return accumulate(    beg + 1, 
+    return accumulate(	beg + 1, 
                         end, 
                         *beg, 
                         [](unsigned char a, unsigned char b) -> unsigned char { return a^b; });
