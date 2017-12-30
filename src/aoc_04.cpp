@@ -19,12 +19,6 @@ auto split(const string& passphrase)
     return result;
 }
 
-auto sort(string& s)
-{
-    sort(s.begin(), s.end());
-    return s;
-} 
-
 bool check_passphrase(const string& passphrase)
 {
     auto words = split(passphrase);
@@ -35,7 +29,7 @@ bool check_passphrase(const string& passphrase)
 bool check_passphrase_anagram(const string& passphrase)
 {
     auto words = split(passphrase);
-    for_each(words.begin(), words.end(), &sort);
+    for_each(words.begin(), words.end(), [](string& s){ sort(s.begin(), s.end()); });
     set<string> unique_words(words.begin(), words.end());
     return unique_words.size() == words.size();
 }

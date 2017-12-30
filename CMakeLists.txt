@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5)
 project(aoc)
 
 set(PROJECTS aoc_01 
@@ -29,7 +29,6 @@ set(PROJECTS aoc_01
 
 foreach(target IN LISTS PROJECTS) 
     add_executable(${target} src/${target}.cpp)
-    target_compile_features(${target} PRIVATE cxx_std_14)
-    target_compile_options(${target} PRIVATE "/W4")
+    target_compile_features(${target} PRIVATE cxx_lambdas cxx_trailing_return_types cxx_auto_type cxx_return_type_deduction) 
 endforeach()
 

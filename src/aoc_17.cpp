@@ -3,6 +3,7 @@
 #include <iterator>
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 using namespace std;
 
@@ -32,7 +33,6 @@ size_t process_vortex_part2(size_t num_iterations, size_t step)
         pos = (pos + step)%container_size + 1;
         if (pos == 1) {
             value = container_size;
-            std::cout << value << "\n";
         }
     }
 
@@ -41,7 +41,7 @@ size_t process_vortex_part2(size_t num_iterations, size_t step)
 
 size_t find_value_after(const vector<size_t>& memory, size_t value)
 {
-    auto it = std::find(memory.cbegin(), memory.cend(), value);
+    auto it = find(memory.cbegin(), memory.cend(), value);
     if (it != memory.cend()) {
         size_t offset = it - memory.cbegin();
         return memory[(offset + 1)%memory.size()];

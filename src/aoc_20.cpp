@@ -11,7 +11,7 @@ using namespace std;
 
 using Vector = tuple<int, int, int>;
 
-enum { position, velocity, acceleration, index };
+enum { position, velocity, acceleration, particle_index };
 using Particle = tuple<Vector, Vector, Vector, int>;
 
 struct Particle_less
@@ -33,7 +33,7 @@ Vector operator+(const Vector& a, const Vector& b)
 }
 
 
-Particle parse_particle(const string& s, int index)
+Particle parse_particle(const string& s, int particle_index)
 {
     static regex pattern(   "p=<(-?[0-9]+),(-?[0-9]+),(-?[0-9]+)>, "
                             "v=<(-?[0-9]+),(-?[0-9]+),(-?[0-9]+)>, "
@@ -45,7 +45,7 @@ Particle parse_particle(const string& s, int index)
     return make_tuple(  make_tuple(stoi(sm[1].str()), stoi(sm[2].str()), stoi(sm[3].str())),
                         make_tuple(stoi(sm[4].str()), stoi(sm[5].str()), stoi(sm[6].str())),
                         make_tuple(stoi(sm[7].str()), stoi(sm[8].str()), stoi(sm[9].str())),
-                        index);
+                        particle_index);
 }
 
 template <typename Stream>
@@ -152,7 +152,7 @@ int main()
         Particle_multiset particles = parse_particles(file);
         Particle_set particles_unique(particles.cbegin(), particles.cend()); 
         particles = integrate(particles, 500); // Iterations chosen based on a scientifically proven method called trial and error.
-        cout << "Part 1: " << get<index>(*find_closest(particles)) << "\n"; 
+        cout << "Part 1: " << get<particle_index>(*find_closest(particles)) << "\n"; 
 
         particles_unique = integrate(particles_unique, 500);
         cout << "Part 2: " << particles_unique.size() << "\n";

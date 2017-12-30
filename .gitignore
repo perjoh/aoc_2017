@@ -15,3 +15,5 @@ tests/CTestTestfile.cmake
 CTestTestfile.cmake
 tests/Makefile
 Makefile
+aoc_??
+*.json
