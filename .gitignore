@@ -17,3 +17,4 @@ tests/Makefile
 Makefile
 aoc_??
 *.json
+*.ninja*
