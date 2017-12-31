@@ -159,8 +159,7 @@ void test()
     auto grid = parse_grid(ss);
     assert(grid.size() == 2);
     assert(count_infections(grid, 10000) == 5587); 
-    //assert(count_infections_part_deux(grid, 100) == 26);
-    //cout << count_infections_part_deux(grid, 10000000) << '\n';
+    assert(count_infections_part_deux(grid, 100) == 26);
 }
 
 int main()
@@ -171,7 +170,7 @@ int main()
     if (file) {
         auto grid = parse_grid(file);
         cout << "Part 1: " << count_infections(grid, 10000) << '\n';
-        cout << "Part 1: " << count_infections_part_deux(grid, 10000000) << '\n';
+        cout << "Part 2: " << count_infections_part_deux(grid, 10000000) << '\n';
     } 
 
     return 0;
