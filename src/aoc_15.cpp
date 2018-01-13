@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 
+using namespace std;
+
 long long produce(long long prev_value, long long factor)
 {
     return prev_value*factor%2147483647;
@@ -70,9 +72,9 @@ int count_part2(long long value_a,
     return num_matches;
 }
 
-int to_int(const std::string& value)
+int to_int(const string& value)
 {
-    std::stringstream ss(value);
+    stringstream ss(value);
     int result = 0;
     ss >> result;
     return result;
@@ -98,17 +100,17 @@ int main()
         }
     }
 
-    std::ifstream file("input/aoc_15.txt");
+    ifstream file("input/aoc_15.txt");
     if (file) {
         
         long long value_a = 0;
         long long value_b = 0;
 
-        std::string input;
-        while (std::getline(file, input)) {
-            static std::regex input_regex("Generator (A|B) starts with (\\d+)");
-            std::smatch match;
-            if (std::regex_search(input, match, input_regex)) {
+        string input;
+        while (getline(file, input)) {
+            static regex input_regex("Generator (A|B) starts with (\\d+)");
+            smatch match;
+            if (regex_search(input, match, input_regex)) {
                 assert(match.size() == 3);
                 if (match[1] == 'A') {
                     value_a = to_int(match[2]);
@@ -117,8 +119,8 @@ int main()
                 }
             }
         } 
-        std::cout << "Part 1: " << count_part1(value_a, 16807, value_b, 48271) << "\n";
-        std::cout << "Part 2: " << count_part2(value_a, 16807, value_b, 48271) << "\n";
+        cout << "Part 1: " << count_part1(value_a, 16807, value_b, 48271) << "\n";
+        cout << "Part 2: " << count_part2(value_a, 16807, value_b, 48271) << "\n";
     } 
 
     return 0;

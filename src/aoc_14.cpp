@@ -178,7 +178,6 @@ int main()
         auto block = make_block(input);
 
         cout << "Part 1: " << count_used(block) << "\n"; 
-
         cout << "Part 2: " << count_regions(block) << "\n";
     }
 

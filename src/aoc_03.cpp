@@ -6,9 +6,29 @@
 #include <cassert>
 #include <functional>
 #include <cassert>
-#include "point.hpp"
+#include <tuple>
 
-using Sum_map = std::map<Point, int>;
+using namespace std;
+
+using Point = tuple<int, int>;
+
+Point operator+(const Point& lhs, const Point& rhs)
+{
+    return Point{get<0>(lhs) + get<0>(rhs), get<1>(lhs) + get<1>(rhs)};
+}
+
+Point& operator+=(Point& lhs, const Point& rhs)
+{
+    lhs = lhs + rhs;
+    return lhs; 
+}
+
+const Point up{ 0, 1 };
+const Point down{ 0, -1 };
+const Point right{ 1, 0 };
+const Point left{ -1, 0 };
+
+using Sum_map = map<Point, int>;
 
 int get_sum(const Sum_map& sum_map, const Point& pt)
 {
@@ -22,20 +42,20 @@ int get_sum(const Sum_map& sum_map, const Point& pt)
 
 int sum_points(const Sum_map& sum_map, const Point& pt)
 { 
-    return    get_sum(sum_map, pt + Point::up()) +
-            get_sum(sum_map, pt + Point::up() + Point::right()) +
-            get_sum(sum_map, pt + Point::right()) +
-            get_sum(sum_map, pt + Point::right() + Point::down()) +
-            get_sum(sum_map, pt + Point::down()) +
-            get_sum(sum_map, pt + Point::down() + Point::left()) +
-            get_sum(sum_map, pt + Point::left()) +
-            get_sum(sum_map, pt + Point::left() + Point::up());
+    return  get_sum(sum_map, pt + up) +
+            get_sum(sum_map, pt + up + ::right) +
+            get_sum(sum_map, pt + ::right) +
+            get_sum(sum_map, pt + ::right + down) +
+            get_sum(sum_map, pt + down) +
+            get_sum(sum_map, pt + down + ::left) +
+            get_sum(sum_map, pt + ::left) +
+            get_sum(sum_map, pt + ::left + up);
 }
 
 class Spiral_traverser 
 {
 public :
-    static void traverse(std::function<bool(const Point&, int)> f) 
+    static void traverse(function<bool(const Point&, int)> f) 
     {
         Point pt;
         Spiral_traverser traverser;
@@ -52,7 +72,7 @@ public :
 private :
     void step(Point& p) 
     { 
-        const Point directions[4] = {Point::right(), Point::up(), Point::left(), Point::down()};
+        const Point directions[4] = {::right, ::up, ::left, ::down};
         p += directions[num_turns_%4];
 
         ++step_counter_;
@@ -78,7 +98,7 @@ private :
 
 int manhattan_distance(const Point& pt)
 {
-    return std::abs(pt.x) + std::abs(pt.y);
+    return abs(get<0>(pt)) + abs(get<1>(pt));
 }
 
 int find_distance(int value) 
@@ -135,12 +155,12 @@ int main()
     assert(find_value_greater(400) == 747);
     assert(find_value_greater(800) == 806);
 
-    std::ifstream f("input/aoc_03.txt");
+    ifstream f("input/aoc_03.txt");
     if (f) {
         int value = 0;
         f >> value;
-        std::cout << "Part 1: " << find_distance(value) << "\n";
-        std::cout << "Part 2: " << find_value_greater(value) << "\n";
+        cout << "Part 1: " << find_distance(value) << "\n";
+        cout << "Part 2: " << find_value_greater(value) << "\n";
     }
 
     return 0;

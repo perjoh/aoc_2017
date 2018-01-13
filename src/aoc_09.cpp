@@ -4,6 +4,8 @@
 #include <cassert>
 #include <iterator>
 
+using namespace std;
+
 template <typename Char_it>
 Char_it skip_garbage(Char_it char_it, int& garbage_count)
 {
@@ -94,16 +96,13 @@ int main()
     assert(count_garbage("<!!!>>") == 0);
     assert(count_garbage("<{o\"i!a,<{i<a>") == 10);
 
-    std::ifstream file("input/aoc_09.txt");
+    ifstream file("input/aoc_09.txt");
     if (file) { 
 
-        std::istream_iterator<char> characters(file);
+        istream_iterator<char> characters(file);
         int garbage_count = 0;
-        std::cout << "Part 1: " << group_score(characters, garbage_count) << "\n"; 
-        std::cout << "Part 2: " << garbage_count << "\n"; 
-
-    } else {
-        std::cout << "No input!\n";
+        cout << "Part 1: " << group_score(characters, garbage_count) << "\n"; 
+        cout << "Part 2: " << garbage_count << "\n"; 
     }
 
     return 0;

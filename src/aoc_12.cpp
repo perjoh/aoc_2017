@@ -6,22 +6,24 @@
 #include <cassert>
 #include <fstream>
 
+using namespace std;
+
 // 0 <-> 122, 874, 1940
-std::vector<int> split(const std::string& s)
+vector<int> split(const string& s)
 {
-    std::stringstream ss(s);
-    using is_iter = std::istream_iterator<std::string>;
-    std::vector<std::string> result_str((is_iter(ss)), is_iter());
+    stringstream ss(s);
+    using is_iter = istream_iterator<string>;
+    vector<string> result_str((is_iter(ss)), is_iter());
 
     assert(result_str.size() >= 3);
 
     result_str.erase(result_str.begin() + 1);
 
-    std::vector<int> result;
+    vector<int> result;
     for (auto& str : result_str) {
         ss.clear();
         ss.str(str);
-        std::istream_iterator<int> it(ss);
+        istream_iterator<int> it(ss);
         result.push_back(*it);
     } 
 
@@ -29,14 +31,14 @@ std::vector<int> split(const std::string& s)
 }
 
 // Recursive
-std::set<int> populate_group(const std::vector<std::vector<int>>& graph, int i, std::set<int> group = std::set<int>())
+set<int> populate_group(const vector<vector<int>>& graph, int i, set<int> group = set<int>())
 {
     for (auto& value : graph[i]) { 
         if (group.count(value) == 0) {
             group.insert(value);
             if (value != i) {
                 auto sub_set = populate_group(graph, value, group);
-                group.insert(std::cbegin(sub_set), std::cend(sub_set));
+                group.insert(cbegin(sub_set), cend(sub_set));
             }
         }
     }
@@ -44,7 +46,7 @@ std::set<int> populate_group(const std::vector<std::vector<int>>& graph, int i, 
     return group;
 }    
 
-bool in_any_of(const std::vector<std::set<int>>& groups, int value)
+bool in_any_of(const vector<set<int>>& groups, int value)
 {
     for (auto& group : groups) {
         if (group.count(value) != 0) {
@@ -66,17 +68,17 @@ int main()
     }
 
     const char* filename = "input/aoc_12.txt";
-    std::ifstream file(filename);
+    ifstream file(filename);
     if (file) {
 
-        std::vector<std::vector<int>> graph;
+        vector<vector<int>> graph;
 
-        std::string input;
-        while (std::getline(file, input)) {
+        string input;
+        while (getline(file, input)) {
             graph.push_back(split(input));
         }
         
-        std::vector<std::set<int>> groups;
+        vector<set<int>> groups;
 
         for (auto& values : graph) {
             auto value = values[0];
@@ -86,30 +88,8 @@ int main()
             }
         }
 
-
-        /*std::set<int> group;
-        group.insert(0);
-
-        for (int i = 0; i < 20; ++i) {
-            std::string input;
-            while (std::getline(file, input)) {
-                auto values = split(input);
-                for (auto& value : values ) {
-                    if (group.count(value) == 1) {
-                        group.insert(values.begin(), values.end());
-                        break;
-                    }
-                }
-            }
-
-            file.close();
-            file.open(filename);
-        }*/
-
-        std::cout << "Part 1: " << groups[0].size() << "\n";
-        std::cout << "Part 2: " << groups.size() << "\n";
-    } else {
-        std::cout << "No input!\n";
+        cout << "Part 1: " << groups[0].size() << "\n";
+        cout << "Part 2: " << groups.size() << "\n";
     }
 
     return 0;
